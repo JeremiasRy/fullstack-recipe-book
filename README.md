@@ -23,6 +23,7 @@ This is the first app I tried implimenting the material UI and got the app to lo
 Error handling is much better than in my last app.
 
 The backend is really simple so not too much to it error handling as I said is better than last time and I got the code a bit more organized. 
+There is a unique username check but no checks for password.
 Still a lot more to improve on that part.
 
 If you want to try how it works just sign up, ass a recipe and start adjusting!
