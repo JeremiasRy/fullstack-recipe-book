@@ -1,5 +1,7 @@
 # fullstack-recipe-book
 
+mongoDb database/node/react
+
 This is a recipe book with a few extra functions.
 It uses MongoDB database to store user and recipe data.
 It has basic security with login system, I used bcrypt to hash the passwords so no actual passwords are stored in database.
