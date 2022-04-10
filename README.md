@@ -26,5 +26,6 @@ The backend is really simple so not too much to it error handling as I said is b
 Still a lot more to improve on that part.
 
 If you want to try how it works just sign up, ass a recipe and start adjusting!
+(Or just press log in if you don't care to register)
 
 (there is a heroku link in description)
