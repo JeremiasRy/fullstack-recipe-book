@@ -38,7 +38,7 @@ const Adjustrecipe = ({ recipe }) => {
           ? recipe.ingredients.map(i =>
             <ListItem key={i.name}>
               <ListItemText primary={i.name} secondary={`${i.amount}${i.unit}`} />
-              <TextField id={i.name} placeholder='New amount' onChange={handleChange} autoComplete='off'/>
+              <TextField id={i.name} placeholder='New amount' onChange={handleChange} autoComplete='off' />
             </ListItem>
             )
           : recipe.ingredients.map(i =>
@@ -144,7 +144,7 @@ const Editrecipe = ({ recipe }) => {
         {editedIngredients.length !== 0
           ? editedIngredients.map(i => <ListItem key={i.name}><ListItemText primary={i.name} secondary={`${i.amount}${i.unit}`} />
             <Box sx={{ textAlign: 'right' }} component='form' onSubmit={submitIngredient}>
-              <TextField id={i.name} name={i.unit} placeholder='Amount' onChange={handleIngredientEdit} sx={{ width: '150px' }} autoComplete='off'/>
+              <TextField id={i.name} name={i.unit} placeholder='Amount' onChange={handleIngredientEdit} sx={{ width: '150px' }} autoComplete='off' />
               <Button type='submit' color='secondary'>Edit</Button><Button value={i.name} color='warning' size='small' startIcon={<DeleteIcon />} onClick={removeIngredient}>Remove</Button>
             </Box>
                                        </ListItem>)

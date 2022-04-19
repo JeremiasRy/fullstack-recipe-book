@@ -10,6 +10,7 @@ import { initializeRecipes } from './reducers/recipes'
 import { initializeUsers } from './reducers/users'
 import Recipe from './components/recipe'
 import recipeService from './services/recipe'
+import loginService from './services/login'
 import Home from './components/homePage'
 import { setNotification } from './reducers/notification'
 
@@ -18,13 +19,32 @@ const App = () => {
   const user = useSelector(state => state.login)
   const recipes = useSelector(state => state.recipes)
 
+  const handleLogOut = () => {
+    dispatch(setNotification(`${user.name} Logged out.`, 5))
+    window.localStorage.clear()
+    dispatch(logOut())
+    recipeService.setToken('null')
+  }
+
   useEffect(() => {
-    const currentUserJson = window.localStorage.getItem('currentUser')
-    if (currentUserJson) {
-      const user = JSON.parse(currentUserJson)
-      dispatch(setUser(user))
-      recipeService.setToken(user.token)
+    async function fecthUser () {
+      const currentUserJson = window.localStorage.getItem('currentUser')
+      if (currentUserJson) {
+        const user = JSON.parse(currentUserJson)
+        loginService.setToken(user.token)
+        const isValid = await loginService.check()
+        if (isValid !== false) {
+          dispatch(setUser(user))
+          return recipeService.setToken(user.token)
+        }
+        dispatch(setNotification('Session expired', 5))
+        window.localStorage.clear()
+        dispatch(logOut())
+        recipeService.setToken('null')
+        loginService.setToken('null')
+      }
     }
+    fecthUser()
   }, [dispatch])
 
   useEffect(() => { dispatch(initializeRecipes()) }, [dispatch])
@@ -39,13 +59,6 @@ const App = () => {
   const recipe = recipeMatch
     ? recipes.find(r => r.id === recipeMatch.params.id)
     : null
-
-  const handleLogOut = () => {
-    dispatch(setNotification(`${user.name} Logged out.`, 5))
-    window.localStorage.clear()
-    dispatch(logOut())
-    recipeService.setToken('null')
-  }
 
   return (
     <>

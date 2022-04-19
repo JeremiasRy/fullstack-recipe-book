@@ -31,7 +31,15 @@ const Recipeform = () => {
 
     const ingredientName = ingredientData.get('ingredient')
     const amount = ingredientData.get('amount')
-    const unit = ingredientData.get('unit')
+    let unit = ingredientData.get('unit')
+
+    if (unit.length <= 2) {
+      unit = unit.toLowerCase()
+    }
+    if (unit.length > 2) {
+      const space = ' '
+      unit = space.concat(unit)
+    }
 
     const ingredient = {
       name: ingredientName,

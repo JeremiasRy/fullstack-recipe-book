@@ -37,6 +37,12 @@ const Loginform = () => {
       return login(username, password)
     }
     if (loginRegister === false) {
+      if (username.length < 3) {
+        return dispatch(setError('Username needs to be longer than 3 characters', 5))
+      }
+      if (password.length < 4) {
+        return dispatch(setError('Password needs to be longer than 4 characters', 5))
+      }
       register(username, name, password, confirmPassword)
       return e.currentTarget.reset()
     }

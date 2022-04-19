@@ -3,8 +3,14 @@ const loginRouter = require('express').Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-loginRouter.get('/', async (req, res) => {
-  res.json(req.body)
+loginRouter.get('/', (req, res) => {
+  try {
+  const decodedToken = jwt.verify(req.token, process.env.SECRET)
+  res.status(201).json(decodedToken)
+  }
+  catch (error) {
+  res.json(false)
+  }
 })
 
 loginRouter.post('/', async (req, res) => {
@@ -28,7 +34,7 @@ loginRouter.post('/', async (req, res) => {
 
   }
 
-  const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 60 * 60 })
+  const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 240 * 60 })
 
   res
     .status(200)
