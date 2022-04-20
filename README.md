@@ -28,6 +28,9 @@ Still a lot more to improve on that part.
 
 I added a token checker for the program to check if the session is still running if not it will log you out immediatly (rather than just informing you that your session has expired) frontend sends a request and backend responses with valid token or "false".
 
+Fixed also some backend crashing issues when token expires.. Problem was with my error handling and now it works but the code got a bit messier..
+Next time I will build much more rigid error handling. (Maybe I'll build this app again when I have the time)
+
 If you want to try how it works just sign up, ass a recipe and start adjusting!
 (Or just press log in if you don't care to register)
 
