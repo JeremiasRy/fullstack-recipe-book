@@ -1,22 +1,10 @@
 const logger = require('./logger')
-const jwt = require('jsonwebtoken')
-const User = require('../models/user')
 
 const tokenGetter = (req, res, next) => {
   const authorization = req.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     req.token = authorization.substring(7)
   }
-  next()
-}
-const userGetter = async (req, res, next) => {
-  const decodedToken = jwt.verify(req.token, process.env.SECRET)
-  if (!req.token || !decodedToken.id) {
-    console.log('täh')
-    return res.status(401).json({ error: 'Its a no go' })
-  }
-  const theUser = await User.findById(decodedToken.id)
-  req.user = theUser
   next()
 }
 
@@ -43,7 +31,7 @@ const errorHandler = (error, req, res, next) => {
   } else if (error.name === 'TokenExpiredError') {
     return res.status(401).json({ error: error.message })
   }
-  next(error)
+  next()
 }
 
-module.exports = { requestLogger, unknownEndpoint, errorHandler, tokenGetter, userGetter }
+module.exports = { requestLogger, unknownEndpoint, errorHandler, tokenGetter }

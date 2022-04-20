@@ -37,24 +37,38 @@ recipeRouter.post('/', async (req, res) => {
   res.status(200).json(savedRecipe)
 })
 
-recipeRouter.put('/:id', middleware.userGetter, async (req, res) => {
+recipeRouter.put('/:id', async (req, res) => {
   const recipeCheck = await Recipe
     .findById(req.params.id)
-  if (recipeCheck.user.toString() === req.user._id.toString()) {
+    try {
+      const decodedToken = jwt.verify(req.token, process.env.SECRET)
+      const theUser = await User.findById(decodedToken.id)
+      req.user = theUser
+      }
+      catch (error) {
+      return res.status(401).json({error: "Session expired"})
+      }
+  if (recipeCheck.user.toString() === req.user.id.toString()) {
     const recipe = await Recipe
       .findByIdAndUpdate(req.params.id, req.body, { new: true })
     return res
       .status(200)
       .json(recipe)
   }
-  res
-    .status(401)
-    .json({ error: 'You are not allowed to edit this' })
+  res.status(401).json("Not your recipe")
 })
 
-recipeRouter.delete('/:id', middleware.userGetter, async (req, res) => {
+recipeRouter.delete('/:id', async (req, res) => {
   const recipeCheck = await Recipe
     .findById(req.params.id)
+    try {
+      const decodedToken = jwt.verify(req.token, process.env.SECRET)
+      const theUser = await User.findById(decodedToken.id)
+      req.user = theUser
+      }
+      catch (error) {
+      return res.status(401).json({error: "Session expired"})
+      }
 
   if (!recipeCheck) {
     return res

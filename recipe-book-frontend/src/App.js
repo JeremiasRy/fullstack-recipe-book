@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Route, Routes, useMatch } from 'react-router-dom'
+import { Route, Routes, useMatch, useNavigate } from 'react-router-dom'
 import { logOut, setUser } from './reducers/login'
 import { initializeRecipes } from './reducers/recipes'
 import { initializeUsers } from './reducers/users'
@@ -18,6 +18,7 @@ const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.login)
   const recipes = useSelector(state => state.recipes)
+  let navigate = useNavigate()
 
   const handleLogOut = () => {
     dispatch(setNotification(`${user.name} Logged out.`, 5))
@@ -26,22 +27,24 @@ const App = () => {
     recipeService.setToken('null')
   }
 
-  useEffect(() => {
+  useEffect(() => { 
     async function fecthUser () {
       const currentUserJson = window.localStorage.getItem('currentUser')
       if (currentUserJson) {
         const user = JSON.parse(currentUserJson)
         loginService.setToken(user.token)
         const isValid = await loginService.check()
-        if (isValid !== false) {
+        if (isValid) {
           dispatch(setUser(user))
           return recipeService.setToken(user.token)
         }
+        navigate('/')
         dispatch(setNotification('Session expired', 5))
         window.localStorage.clear()
         dispatch(logOut())
         recipeService.setToken('null')
         loginService.setToken('null')
+        
       }
     }
     fecthUser()
@@ -67,7 +70,7 @@ const App = () => {
         <Box sx={{ height: '100vh', padding: '20px' }}>
           <Routes>
             <Route path='/' element={user ? <Home user={user} handleLogOut={handleLogOut} /> : <Box sx={{ textAlign: 'center' }}> <LoginOrRegisterform /> </Box>} />
-            <Route path='/recipes/:id' element={<Recipe recipe={recipe} />} />
+            <Route path='/recipes/:id' element={<Recipe recipe={recipe}/>} />
           </Routes>
         </Box>
       </Container>

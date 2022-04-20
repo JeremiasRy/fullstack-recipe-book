@@ -25,6 +25,7 @@ const modifyRecipe = async (recipe, id) => {
     headers: { authorization: token }
   }
   const request = await axios.put(`${baseUrl}/${id}`, recipe, config)
+  console.log(request.data)
   return request.data
 }
 

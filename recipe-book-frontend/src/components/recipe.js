@@ -13,6 +13,7 @@ import { modifyRecipe, removeRecipe } from '../reducers/recipes'
 import { useDispatch, useSelector } from 'react-redux'
 import { setInfo } from '../reducers/notification'
 
+
 const Adjustrecipe = ({ recipe }) => {
   const [change, setChange] = useState(0)
   const [amounts, setAmounts] = useState()
@@ -59,6 +60,7 @@ const Editrecipe = ({ recipe }) => {
   const [editedIngredients, setEditedIngredients] = useState([])
   const [editIngredient, setEditIngredient] = useState()
   const [editMethod, setEditMethod] = useState()
+  let navigate = useNavigate()
 
   const dispatch = useDispatch()
 
@@ -85,9 +87,9 @@ const Editrecipe = ({ recipe }) => {
 
     const ingredientData = new FormData(e.currentTarget)
 
-    const ingredientName = ingredientData.get('ingredient')
-    const amount = ingredientData.get('amount')
-    const unit = ingredientData.get('unit')
+    let ingredientName = ingredientData.get('ingredient')
+    let amount = ingredientData.get('amount')
+    let unit = ingredientData.get('unit')
 
     if (ingredientName === '') {
       return dispatch(setInfo('Give your ingredient a name.', 5))
@@ -97,6 +99,13 @@ const Editrecipe = ({ recipe }) => {
     }
     if (unit === '') {
       return dispatch(setInfo('Give a unit', 5))
+    }
+    if (unit.length <= 2) {
+      unit = unit.toLowerCase()
+    }
+    if (unit.length > 2) {
+      const space = ' '
+      unit = space.concat(unit)
     }
 
     const ingredient = {
@@ -128,6 +137,7 @@ const Editrecipe = ({ recipe }) => {
       editRecipe.method = editMethod
     }
     dispatch(modifyRecipe(editRecipe, recipe.id))
+    navigate('/')
   }
   const removeIngredient = (e) => {
     e.preventDefault()
@@ -207,7 +217,7 @@ const Drawrecipe = ({ recipe, amounts }) => {
   )
 }
 
-const Recipe = ({ recipe }) => {
+const Recipe = ({ recipe, isValid }) => {
   const [amounts, setAmounts] = useState()
   const [recipeState, setRecipeState] = useState(0) // This is not very good solution but atleast it works
   const user = useSelector(state => state.login)

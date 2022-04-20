@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import recipeService from '../services/recipe'
+import { useNavigate } from 'react-router-dom'
+import { logOut } from './login'
 import { setError, setSnackbar } from './notification'
 
 const initialState = null
@@ -38,7 +40,8 @@ export const newRecipe = (recipe) => {
       dispatch(addRecipe(newRe))
       dispatch(setSnackbar(`${newRe.name} Added succesfully!`, 5))
     } catch (error) {
-      dispatch(setError('Your session has expired please log out and login again', 5))
+      dispatch(setError('Your session has expired please login again', 5))
+      dispatch(logOut())     
     }
   }
 }
@@ -49,7 +52,8 @@ export const modifyRecipe = (recipe, id) => {
       dispatch(editRec(editRe))
       dispatch(setSnackbar(`${editRe.name} Edited succesfully`, 5))
     } catch (error) {
-      dispatch(setError('You are not allowed to edit this', 5))
+      dispatch(setError("Session expired!", 5))
+      dispatch(logOut())
     }
   }
 }
@@ -60,7 +64,8 @@ export const removeRecipe = (id) => {
       dispatch(setSnackbar(`Removed succesfully ${remove.name}`, 5))
       dispatch(delRecipe(remove.id))
     } catch (error) {
-      dispatch(setError('Can not do this', 5))
+      dispatch(setError('Session expired', 5))
+      dispatch(logOut())
     }
   }
 }

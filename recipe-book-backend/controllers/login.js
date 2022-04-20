@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 loginRouter.get('/', (req, res) => {
   try {
   const decodedToken = jwt.verify(req.token, process.env.SECRET)
-  res.status(201).json(decodedToken)
+  res.status(201).json(true)
   }
   catch (error) {
   res.json(false)
@@ -34,7 +34,7 @@ loginRouter.post('/', async (req, res) => {
 
   }
 
-  const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 240 * 60 })
+  const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 120 * 60 })
 
   res
     .status(200)
