@@ -26,6 +26,8 @@ The backend is really simple so not too much to it error handling as I said is b
 There is a unique username check but no checks for password.
 Still a lot more to improve on that part.
 
+I added a token checker for the program to check if the session is still running if not it will log you out immediatly (rather than just informing you that your session has expired) frontend sends a request and backend responses with valid token or "false".
+
 If you want to try how it works just sign up, ass a recipe and start adjusting!
 (Or just press log in if you don't care to register)
 
