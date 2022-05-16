@@ -14,7 +14,6 @@ Let's say you have too little of some ingredient just input your amount to the p
 (The feature is built in 'recipe' component under adjustRecipe.)
 
 It has quite a lot of features in editing recipe (Like changing amounts and adding/removing ingredients) 
-But everything works nicely and fast with the backend!
 
 The recipe component is quite large and maybe would have been better to split it into own files and components but I think the app works really good this way
 (Of course many things could be improved)
