@@ -20,8 +20,6 @@ The recipe component is quite large and maybe would have been better to split it
 
 This is the first app I tried implimenting the material UI and got the app to look a bit nicer than usual. Notifications work ok and are informative.
 
-The backend is really simple
-There is a unique username check.
 
 I added a token checker for the program to check if the session is still running if not it will log you out immediatly (rather than just informing you that your session has expired) frontend sends a request and backend responses with valid token or "false".
 
