@@ -18,12 +18,10 @@ It has quite a lot of features in editing recipe (Like changing amounts and addi
 The recipe component is quite large and maybe would have been better to split it into own files and components but I think the app works really good this way
 (Of course many things could be improved)
 
-This is the first app I tried implimenting the material UI and got the app to look a bit more professional. Notifications work nicely and are informative.
-Error handling is much better than in my last app.
+This is the first app I tried implimenting the material UI and got the app to look a bit nicer than usual. Notifications work ok and are informative.
 
-The backend is really simple so not too much to it error handling as I said is better than last time and I got the code a bit more organized. 
-There is a unique username check but no checks for password.
-Still a lot more to improve on that part.
+The backend is really simple
+There is a unique username check.
 
 I added a token checker for the program to check if the session is still running if not it will log you out immediatly (rather than just informing you that your session has expired) frontend sends a request and backend responses with valid token or "false".
 
